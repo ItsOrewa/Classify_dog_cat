@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Jul  2 19:54:56 2020
-
-@author: PC Arwa
-"""
 
 from keras.preprocessing.image import ImageDataGenerator,  img_to_array, load_img
 import glob
@@ -19,11 +13,10 @@ from sklearn.metrics import classification_report,accuracy_score,mean_squared_er
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 
-#Question1
-dataDog=glob.glob('C:/Users/PC Arwa/Desktop/Arwa_Jouini/Animals/dog*')
-dataCat=glob.glob('C:/Users/PC Arwa/Desktop/Arwa_Jouini/Animals/cat*')
 
-#Question2
+dataDog=glob.glob('url/Animals/dog*')
+dataCat=glob.glob('url/Animals/cat*')
+
 dataAug = ImageDataGenerator(rotation_range = 40,shear_range = 0.2, 
         zoom_range = 0.2,horizontal_flip = True, 
         width_shift_range=0.2,height_shift_range=0.2,brightness_range = (0.5, 1.5))
@@ -43,10 +36,8 @@ def imgFunc (data,c):
 imgFunc(dataDog,'dog')
 imgFunc(dataCat,'cat')
 
-#Question3
-
-new_dataDog=glob.glob('C:/Users/PC Arwa/Desktop/Arwa_Jouini/Animals/dog*')
-new_dataCat=glob.glob('C:/Users/PC Arwa/Desktop/Arwa_Jouini/Animals/cat*')
+new_dataDog=glob.glob('url/Animals/dog*')
+new_dataCat=glob.glob('url/Animals/cat*')
 
 def colorFunc(data):
     for pic in data:
@@ -57,20 +48,16 @@ def colorFunc(data):
 colorFunc(new_dataDog)
 colorFunc(new_dataCat)
 
-#Question4
 def resizeFunc(data):
     for pic in data:
         img = Image.open(pic)
         img = img.resize((400,400))
         img.save(pic)
 
-
 resizeFunc(new_dataDog)
 resizeFunc(new_dataCat)
 
 
-
-#Question5
 mydata=[]
 cat=0
 dog=0
@@ -110,7 +97,6 @@ X1=model.fit_transform(mydata)
 #model = LDA()
 #X2 = model.fit_transform(mydata, l)
 
-#Question 7 Random Forest
 X1_train, X1_test, y_train, y_test= train_test_split(X1,l, test_size=0.3, random_state=0)
 rf = RandomForestRegressor(n_estimators = 1000, random_state = 40)
 rf.fit(X1_train, y_train)
@@ -119,7 +105,6 @@ print("Random Forest :\nAccuracy:",metrics.accuracy_score(y_test, y_pred.round()
 classification_report(y_test, y_pred)
 
 
-#SVM ploy
 model = svm.SVC(kernel='poly',degree=5)
 #model=svm.SVC(kernel='sigmoid',gamma=0.1,Coef0=2)
 #model=svm.SVC(kernel='rbf',C=1,gamma=0.1)
